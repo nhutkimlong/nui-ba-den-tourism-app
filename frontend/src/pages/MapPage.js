@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -14,6 +14,7 @@ L.Icon.Default.mergeOptions({
 
 export default function MapPage() {
   const [points, setPoints] = useState([]);
+  const [geo, setGeo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -23,6 +24,10 @@ export default function MapPage() {
       .then((res) => { if (mounted) setPoints(res.data); })
       .catch(() => setError('Không tải được dữ liệu'))
       .finally(() => setLoading(false));
+
+    api.get('/api/map/geojson')
+      .then((res) => setGeo(res.data))
+      .catch(() => {});
     return () => { mounted = false; };
   }, []);
 
@@ -39,6 +44,15 @@ export default function MapPage() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {geo && (
+          <GeoJSON data={geo} style={{ color: '#0ea5e9' }}
+            pointToLayer={(feature, latlng) => L.marker(latlng)}
+            onEachFeature={(feature, layer) => {
+              const name = feature.properties?.name || 'Điểm';
+              layer.bindPopup(`<strong>${name}</strong>`);
+            }}
+          />
+        )}
         {points.map((p) => (
           <Marker key={p.id} position={[p.lat, p.lng]}>
             <Popup>

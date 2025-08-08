@@ -1,10 +1,6 @@
 {
   "name": "nui-ba-den-tourism-app",
   "private": true,
-  "workspaces": [
-    "backend",
-    "frontend"
-  ],
   "scripts": {
     "start:backend": "npm --prefix backend run start",
     "start:frontend": "npm --prefix frontend start",

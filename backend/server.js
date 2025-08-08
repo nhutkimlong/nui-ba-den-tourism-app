@@ -1,6 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -90,6 +94,37 @@ app.get('/api/events', (req, res) => {
 
 app.get('/api/map', (req, res) => {
   res.json(mapPoints);
+});
+
+// Return GeoJSON from remote URL or local file
+app.get('/api/map/geojson', async (req, res) => {
+  const remoteUrl = process.env.MAP_DATA_URL;
+  if (remoteUrl) {
+    https.get(remoteUrl, (r) => {
+      let data = '';
+      r.on('data', (chunk) => (data += chunk));
+      r.on('end', () => {
+        try {
+          const json = JSON.parse(data);
+          res.json(json);
+        } catch (e) {
+          res.status(500).json({ error: 'Invalid JSON from MAP_DATA_URL' });
+        }
+      });
+    }).on('error', () => res.status(502).json({ error: 'Failed to fetch MAP_DATA_URL' }));
+    return;
+  }
+
+  const filePath = path.join(__dirname, 'data', 'map.geojson');
+  if (fs.existsSync(filePath)) {
+    try {
+      const text = fs.readFileSync(filePath, 'utf8');
+      return res.json(JSON.parse(text));
+    } catch (e) {
+      return res.status(500).json({ error: 'Failed to read local GeoJSON' });
+    }
+  }
+  res.status(404).json({ error: 'No GeoJSON source configured' });
 });
 
 // Health check

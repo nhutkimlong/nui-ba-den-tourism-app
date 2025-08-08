@@ -1,0 +1,17 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Chùa Bà" },
+      "geometry": { "type": "Point", "coordinates": [106.1303, 11.3127] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Đỉnh Núi Bà Đen" },
+      "geometry": { "type": "Point", "coordinates": [106.1355, 11.3047] }
+    }
+  ]
+}
+
+
