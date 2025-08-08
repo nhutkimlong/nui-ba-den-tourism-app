@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import api from '../api';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { FiSearch, FiFilter, FiMapPin, FiNavigation, FiX, FiPlay, FiClock, FiInfo } from 'react-icons/fi';
+import { FiSearch, FiFilter, FiMapPin, FiNavigation, FiX, FiInfo } from 'react-icons/fi';
 
 // Fix default icon issue in Leaflet when bundling
 delete L.Icon.Default.prototype._getIconUrl;
@@ -27,7 +27,6 @@ const POI_CATEGORIES = {
 
 // Default icon URLs
 const getDefaultIconUrl = (poiType) => {
-  const category = POI_CATEGORIES[poiType] || POI_CATEGORIES.attraction;
   return `https://cdn-icons-png.flaticon.com/128/6771/6771569.png`;
 };
 
@@ -123,7 +122,6 @@ const MapControls = ({ onSearch, onFilter, onLocate }) => {
 // Search Component
 const SearchComponent = ({ pois, onSelectPOI, onClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchHistory, setSearchHistory] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
   const filteredPOIs = pois.filter(poi => {

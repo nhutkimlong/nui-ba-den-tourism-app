@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api';
-import { FiMapPin, FiExternalLink, FiUtensils } from 'react-icons/fi';
+import { FiMapPin, FiExternalLink, FiCoffee } from 'react-icons/fi';
 
 function Restaurants() {
   const [restaurants, setRestaurants] = useState([]);
@@ -81,7 +81,7 @@ function Restaurants() {
                 
                 {restaurant.cuisine && (
                   <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <FiUtensils size={14} />
+                    <FiCoffee size={14} />
                     <span>{restaurant.cuisine}</span>
                   </div>
                 )}
@@ -110,7 +110,7 @@ function Restaurants() {
       {restaurants.length === 0 && (
         <div className="text-center py-12">
           <div className="text-gray-400 mb-4">
-            <FiUtensils size={48} className="mx-auto" />
+            <FiCoffee size={48} className="mx-auto" />
           </div>
           <h3 className="text-lg font-medium text-gray-600 mb-2">Chưa có nhà hàng</h3>
           <p className="text-gray-500">Hiện tại chưa có thông tin nhà hàng nào được cập nhật.</p>
