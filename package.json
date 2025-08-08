@@ -1,0 +1,17 @@
+{
+  "name": "nui-ba-den-tourism-app",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "start:backend": "npm --prefix backend run start",
+    "start:frontend": "npm --prefix frontend start",
+    "dev": "concurrently \"npm run serve-backend\" \"npm run start:frontend\"",
+    "serve-backend": "npm --prefix backend run start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
