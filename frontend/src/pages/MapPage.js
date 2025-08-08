@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -19,7 +19,7 @@ export default function MapPage() {
 
   useEffect(() => {
     let mounted = true;
-    axios.get('/api/map')
+    api.get('/api/map')
       .then((res) => { if (mounted) setPoints(res.data); })
       .catch(() => setError('Không tải được dữ liệu'))
       .finally(() => setLoading(false));

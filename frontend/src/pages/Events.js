@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 export default function Events() {
   const [items, setItems] = useState([]);
@@ -8,7 +8,7 @@ export default function Events() {
 
   useEffect(() => {
     let mounted = true;
-    axios.get('/api/events')
+    api.get('/api/events')
       .then((res) => { if (mounted) setItems(res.data); })
       .catch(() => setError('Không tải được dữ liệu'))
       .finally(() => setLoading(false));
