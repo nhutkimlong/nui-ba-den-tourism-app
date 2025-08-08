@@ -1,6 +1,8 @@
 :root {
   --primary: #0ea5e9;
   --text: #0f172a;
+  --muted: #475569;
+  --border: #e5e7eb;
 }
 
 * { box-sizing: border-box; }
@@ -13,7 +15,7 @@
 
 .navbar {
   background: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -49,6 +51,14 @@
   color: #fff;
 }
 
+.mobile-toggle { display: none; }
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .mobile-toggle { display: inline-flex; align-items: center; justify-content: center; height: 36px; width: 36px; border-radius: 8px; border: 1px solid var(--border); }
+  .mobile-menu { display: grid; gap: 8px; padding: 12px 0; }
+}
+
 .page {
   padding: 24px 0;
 }
@@ -60,17 +70,32 @@
 }
 
 .card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
+  transition: transform .15s ease, box-shadow .15s ease;
 }
+
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,.08); }
+
+.skeleton { background: linear-gradient(90deg,#f3f4f6 25%,#e5e7eb 37%,#f3f4f6 63%); background-size: 400% 100%; animation: shimmer 1.2s infinite; border-radius: 8px; }
+.skeleton.h160 { height: 160px; }
+.skeleton.line { height: 14px; margin: 8px 0; }
+
+@keyframes shimmer { 0%{background-position:100% 0} 100%{background-position: -100% 0} }
 
 .card img { width: 100%; height: 160px; object-fit: cover; }
 
 .card-body { padding: 12px; }
 
 .price { color: #16a34a; font-weight: 700; }
+
+.hero { padding: 40px 0 24px; }
+.hero h1 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 8px; }
+.hero p { color: var(--muted); margin: 0; }
+
+.footer { margin-top: 40px; padding: 20px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
 
 .App-logo {
   height: 40vmin;
@@ -83,16 +108,7 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+/* remove CRA leftovers */
 
 .App-link {
   color: #61dafb;

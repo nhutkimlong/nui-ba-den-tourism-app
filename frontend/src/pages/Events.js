@@ -15,7 +15,23 @@ export default function Events() {
     return () => { mounted = false; };
   }, []);
 
-  if (loading) return <div className="page">Đang tải...</div>;
+  if (loading) return (
+    <div className="page">
+      <h1>Sự kiện</h1>
+      <div className="grid">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="card">
+            <div className="skeleton h160" />
+            <div className="card-body">
+              <div className="skeleton line" style={{ width: '60%' }} />
+              <div className="skeleton line" style={{ width: '90%' }} />
+              <div className="skeleton line" style={{ width: '40%' }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
   if (error) return <div className="page">{error}</div>;
 
   return (
