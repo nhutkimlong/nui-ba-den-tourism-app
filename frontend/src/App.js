@@ -5,6 +5,7 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Events from './pages/Events';
 import MapPage from './pages/MapPage';
+import MobileNav from './components/MobileNav';
 
 import { useState } from 'react';
 
@@ -48,6 +49,7 @@ function App() {
         </Routes>
         <footer className="footer">© {new Date().getFullYear()} Núi Bà Đen Tourism</footer>
       </div>
+      <MobileNav />
     </Router>
   );
 }
