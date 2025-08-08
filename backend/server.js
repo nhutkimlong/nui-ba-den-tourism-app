@@ -79,6 +79,20 @@ const mapPoints = [
   },
 ];
 
+// Load JSON data from files
+const loadJsonData = (filename) => {
+  try {
+    const filePath = path.join(__dirname, 'data', filename);
+    if (fs.existsSync(filePath)) {
+      const text = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(text);
+    }
+  } catch (e) {
+    console.error(`Error loading ${filename}:`, e.message);
+  }
+  return [];
+};
+
 // Routes
 app.get('/api/info', (req, res) => {
   res.json({ name: 'Núi Bà Đen Tourism App', status: 'Running' });
@@ -125,6 +139,31 @@ app.get('/api/map/geojson', async (req, res) => {
     }
   }
   res.status(404).json({ error: 'No GeoJSON source configured' });
+});
+
+// API endpoints for tourism data
+app.get('/api/tours', (req, res) => {
+  res.json(loadJsonData('tours.json'));
+});
+
+app.get('/api/restaurants', (req, res) => {
+  res.json(loadJsonData('restaurants.json'));
+});
+
+app.get('/api/accommodations', (req, res) => {
+  res.json(loadJsonData('accommodations.json'));
+});
+
+app.get('/api/specialties', (req, res) => {
+  res.json(loadJsonData('specialties.json'));
+});
+
+app.get('/api/poi', (req, res) => {
+  res.json(loadJsonData('poi.json'));
+});
+
+app.get('/api/activities', (req, res) => {
+  res.json(loadJsonData('giohoatdong.json'));
 });
 
 // Health check
